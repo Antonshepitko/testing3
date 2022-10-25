@@ -20,14 +20,26 @@ board = create_board()
 print_board(board)
 
 def shoot(row, col, guess_row, guess_col):
-    if guess_row == row + 1 and guess_col == col + 1:
-        print("Congratulations! You sunk my battleship!")
-        return ("Victory!")
-    else:
-        print("You missed my battleship!")
-        board[guess_row - 1][guess_col - 1] = 'X'
-        print_board(board)
-        return ("Miss")
+    try:
+        guess_row = int(guess_row)
+        guess_col = int(guess_col)
+        if guess_row > 5 or guess_row < 1 or guess_col > 5 or guess_col < 1:
+            print("You are out of the ocean")
+            return ("Out of range")
+        elif board[guess_row - 1][guess_col - 1] == 'X':
+            print("You had tried this already")
+            return("Guessed")
+        elif guess_row == row + 1 and guess_col == col + 1:
+            print("Congratulations! You sunk my battleship!")
+            return ("Victory!")
+        else:
+            print("You missed my battleship!")
+            board[guess_row - 1][guess_col - 1] = 'X'
+            print_board(board)
+            return ("Miss")
+    except:
+        print("Only integers required!")
+        return ("Integers only allowed")
 
 def main_game():
     row = 1
@@ -39,3 +51,5 @@ def main_game():
         if result == "Victory!":
             return (0)
     print ("Defeat")
+
+main_game()
